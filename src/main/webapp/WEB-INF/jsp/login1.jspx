@@ -1,0 +1,58 @@
+<div xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:s="/struts-tags"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+	<link type="text/css" rel="stylesheet" href="books.css" />
+
+	<jsp:directive.page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" />
+	<jsp:output omit-xml-declaration="yes" />
+	<div>
+		<s:fielderror>
+			<s:param>invalidLoginPassw</s:param>
+		</s:fielderror>
+		<s:fielderror>
+			<s:param>j_username</s:param>
+		</s:fielderror>
+		<s:fielderror>
+			<s:param>j_password</s:param>
+		</s:fielderror>
+	</div>
+
+	<s:form action="/login_check.action" namespace="/" method="post">
+		<div class="main">
+			<div class="login_label">				
+				<s:text name="to_enter_the_system_enter_the" />
+			</div>
+			<div class="field">
+				<line_Label class="label_field"><s:text name="username" />: </line_Label>
+
+				<input id="j_username" name="j_username" size="20" maxlength="50"
+					type="text" class="get" />
+			</div>
+			<div class="field">
+
+				<line_Label class="label_field"><s:text name="password" />: </line_Label>
+				<input id="j_password" name="j_password" size="20" maxlength="50"
+					type="password" class="get" />
+
+			</div>
+			<div class="login_button">
+				<c:set var="butname">
+				<s:text name="login" />
+				</c:set>
+
+				<input type="submit" value="${butname}" class="press"
+					action="login_check" />
+				 
+				<!-- ${butname} onclick="openPage('hello.action')" -->
+
+			</div>
+		</div>
+	</s:form>
+	<script type="text/javascript">
+ function openPage(pageURL)
+ {
+ window.location.href = pageURL;
+ }
+</script>
+</div>

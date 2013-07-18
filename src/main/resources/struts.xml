@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+   "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+   "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<constant name="struts.enable.DynamicMethodInvocation" value="true" />
+	<constant name="struts.devMode" value="true" />
+	<constant name="struts.custom.i18n.resources" value="global" />
+
+	<package name="common" namespace="/" extends="tiles-default">
+
+		<result-types>
+			<result-type name="tiles"
+				class="org.apache.struts2.views.tiles.TilesResult" />
+		</result-types>
+
+		<interceptors>
+		<!-- 
+			<interceptor name="titleView" class="books2.tiles.AutoTilesView" />
+			<interceptor-stack name="titleStack">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="titleView" />
+			</interceptor-stack>
+			 -->
+			<interceptor name="checkAuthInterceptor"
+				class="books2.action.AuthenticationInterceptor" />
+			<interceptor-stack name="defStack">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="checkAuthInterceptor" />
+			</interceptor-stack>
+			
+		</interceptors>
+ 
+		<default-interceptor-ref name="defStack" />
+
+		<global-results>
+			<result type="redirect" name="redirectToLogin">login</result>
+		</global-results>
+
+		<action name="index">
+			<result>index</result>
+		</action>
+
+		<action name="create_the_author" class="books2.action.CreateAuthorAction"
+			method="onSubmit">
+			<result name="success" type="tiles">list_of_authors</result>
+			<result name="input" type="tiles">create_the_author</result>
+		</action>
+
+		<action name="to_create_the_author" class="books2.action.CreateAuthorAction"
+			method="execute">
+			<result name="success" type="tiles">create_the_author</result>
+		</action>
+
+		<action name="doReplAuthor" class="books2.action.CreateAuthorAction"
+			method="execute">
+			<result name="success" type="tiles">create_the_author</result>
+			<result name="input" type="tiles">create_the_author</result>
+		</action>
+
+		<action name="list_of_authors" class="books2.action.ListAuthorsAction"
+			method="execute">
+			<param name="checkAuth">true</param>			
+			<result name="success" type="tiles">list_of_authors</result>
+			<result name="input" type="tiles">list_of_authors</result>
+		</action>
+
+		<action name="list_of_books_by_the_author" class="books2.action.ListBooksAuthorAction"
+			method="execute">
+			<param name="checkAuth">true</param>
+			<result name="success" type="tiles">list_of_books_by_the_author
+			</result>
+		</action>
+
+		<action name="doNewlList_books" class="books2.action.CreatingBookAction"
+			method="execute">
+			<result name="success" type="tiles">creating_a_of_the_book</result>
+		</action>
+
+		<action name="doReplList_books" class="books2.action.CreatingBookAction"
+			method="execute">
+			<result name="success" type="tiles">creating_a_of_the_book</result>
+			<result name="input" type="tiles">creating_a_of_the_book</result>
+		</action>
+
+		<action name="creating_a_of_the_book" class="books2.action.CreatingBookAction"
+			method="onSubmit">
+			<result name="success" type="tiles">list_of_books</result>
+			<result name="input" type="tiles">creating_a_of_the_book</result>
+		</action>
+
+		<action name="list_of_books" class="books2.action.ListBooksAction"
+			method="execute">
+		 <param name="checkAuth">true</param> 
+			<result name="success" type="tiles">list_of_books</result>
+			<result name="input" type="tiles">list_of_books</result>
+		</action>
+
+		<action name="doSeekList_books" class="books2.action.ListBooksAction"
+			method="onSubmit">
+			<result name="success" type="tiles">list_of_books</result>
+		</action>
+
+		<action name="hello" class="books2.action.HelloAction" method="execute">
+		 <param name="checkAuth">true</param> 
+			<result name="success" type="tiles">hello</result>
+		</action>
+
+		<action name="login" class="books2.action.LoginAction" method="input">
+			<result name="success" type="tiles">login</result>
+		</action>
+
+		<action name="login_check" class="books2.action.LoginAction"
+			method="onSubmit">
+			<result name="success" type="tiles">hello</result>
+			<result name="input" type="tiles">login</result>
+		</action>
+	</package>
+
+</struts>

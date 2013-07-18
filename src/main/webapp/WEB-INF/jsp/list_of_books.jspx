@@ -1,0 +1,127 @@
+﻿<div xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:s="/struts-tags"
+        >
+
+	<link type="text/css" rel="stylesheet" href="books.css" />
+
+	<jsp:directive.page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" 
+		/>
+
+<c:set var="login0" value="${applicationScope['login0']}"/>
+<c:set var="books" value="${applicationScope['books']}"/>
+
+	<s:form method="POST" action="list_of_books" commandName="book">
+		<br />
+		<s:text name="enter_the_name_of_the_book" />
+		<blok_hide>__</blok_hide>
+		<input id="j_username" name="name" type="text" class="get" />
+		<blok_hide>__</blok_hide>
+		<c:set var="butname">
+			<s:text name="look_for_the_book" />
+		</c:set>
+		<input type="submit" value="${butname}" name="seek" class="press" action="doSeekList_books" />
+		<br />
+		<br />
+
+		<jsp:scriptlet>System.out.println("Hello 1"+request.getParameter("login0"));</jsp:scriptlet>
+		
+		<caption_greasy> <s:text name="list_of_books" />
+		</caption_greasy>
+		<c:if test="${login0 == 'admin'}">
+			<c:set var="butname">
+				<s:text name="create_a_new_workbook" />
+			</c:set>
+			<input class="right_but" type="button" value="${butname}" 
+				onclick="openPage('doNewlList_books.action')" />
+				 
+			<br />
+		</c:if>
+		
+		<table class="table_bord">
+			<tr>
+				<th class="lc"><s:text name="name" /></th>
+				<th class="gray"><s:text name="brief_description" /></th>
+				<th class="gray"><s:text name="year_of_publication" />
+				</th>
+				<th class="gray"><s:text name="authors" /></th>
+				<c:if test="${login0 == 'admin'}">
+					<th class="gray"><s:text name="actions" /></th>
+				</c:if>
+			</tr>
+			<c:set var="even" value="false" />
+			<c:forEach var="book" items="${books}">
+				<c:set var="first" value="true" />
+				<jsp:scriptlet>System.out.println("for 1");</jsp:scriptlet>
+				<c:forEach var="author" items="${book.authors}">
+				<jsp:scriptlet>System.out.println("for 2");</jsp:scriptlet>
+					<c:choose>
+						<c:when test="${even == 'false'}">
+							<tr>
+								<c:choose>
+									<c:when test="${first == 'true'}">
+										<c:set var="first" value="false" />
+										<td class="lctd">${book.name}</td>
+										<td class="td_bord">${book.brief_Description}</td>
+										<td class="td_bord">${book.year_Of_Publication}</td>
+										<td class="td_bord">${author}</td>
+										<td class="td_bord"><c:if test="${login0 == 'admin'}">
+												<a class="color_href"
+													href="doReplList_books.action?id=${book.id}"><s:text name="retrofit" /> </a>,
+                                        <a class="color_href"
+													href="list_books.action?del=${book.id}"><s:text name="to_delete" /> </a>
+											</c:if>
+										</td>
+									</c:when>
+									<c:otherwise>
+										<td class="lctd"></td>
+										<td class="td_bord"></td>
+										<td class="td_bord"></td>
+										<td class="td_bord">${author}</td>
+										<td class="td_bord"></td>
+									</c:otherwise>
+								</c:choose>
+							</tr>
+							<c:set var="even" value="true" />
+						</c:when>
+						<c:otherwise>
+							<tr class="tr_even">
+								<c:choose>
+									<c:when test="${first == 'true'}">
+										<c:set var="first" value="false" />
+										<td class="lctd">${book.name}</td>
+										<td class="td_bord">${book.brief_Description}</td>
+										<td class="td_bord">${book.year_Of_Publication}</td>
+										<td class="td_bord">${author}</td>
+										<td class="td_bord"><c:if test="${login0 == 'admin'}">
+												<a class="color_href"
+													href="doReplList_books.action?id=${book.id}"><s:text name="retrofit" /> </a>,
+                                                <a class="color_href"
+													href="list_books.action?del=${book.id}"><s:text name="to_delete" /> </a>
+											</c:if>
+										</td>
+
+									</c:when>
+									<c:otherwise>
+										<td class="lctd"></td>
+										<td class="td_bord"></td>
+										<td class="td_bord"></td>
+										<td class="td_bord">${author}</td>
+										<td class="td_bord"></td>
+									</c:otherwise>
+								</c:choose>
+							</tr>
+							<c:set var="even" value="false" />
+						</c:otherwise>
+					</c:choose>
+				</c:forEach>
+			</c:forEach>
+		</table>
+	</s:form>
+	<script type="text/javascript">
+ function openPage(pageURL)
+ {
+ window.location.href = pageURL;
+ }
+</script>
+</div>

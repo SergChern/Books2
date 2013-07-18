@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping
+    PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="books2.server">
+
+	<class name="Book" table="book">
+		<id column="id" name="Id" type="java.lang.Long">
+			<generator class="native" />
+		</id>
+		<property column="name" name="name" type="java.lang.String"
+			length="120" not-null="true" />
+		<property column="brief_description" name="brief_Description"
+			type="java.lang.String" length="255" not-null="true" />
+		<property column="year_of_publication" name="year_Of_Publication"
+			type="java.lang.String" length="4" not-null="true" />
+		<set name="authors" cascade="save-update" inverse="false" table="author_book"
+			lazy="false">
+			<key column="fk_book_id" not-null="true" />
+			<many-to-many class="Author" column="fk_author_id" />
+		</set>
+	</class>
+</hibernate-mapping>
